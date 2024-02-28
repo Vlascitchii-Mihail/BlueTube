@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/videoListFragment">
+
+    <fragment
+        android:id="@+id/videoListFragment"
+        android:name="com.usm.bluetube.ui.VideoList"
+        android:label="fragment_video_list"/>
+
+    <fragment
+        android:id="@+id/shortsListFragment"
+        android:name="com.usm.bluetube.ui.ShortsList"
+        android:label="fragment_shorts_list"/>
+
+</navigation>
