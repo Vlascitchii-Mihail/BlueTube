@@ -2,4 +2,6 @@
     <string name="app_name">BlueTube</string>
     <string name="hello_video_list_fragment">Video List Fragment</string>
     <string name="hello_shorts_list_fragment">Shorts List Fragment</string>
+    <string name="main_video_list">Main</string>
+    <string name="shorts">Shorts</string>
 </resources>
