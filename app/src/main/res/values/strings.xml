@@ -4,4 +4,7 @@
     <string name="hello_shorts_list_fragment">Shorts List Fragment</string>
     <string name="main_video_list">Main</string>
     <string name="shorts">Shorts</string>
+    <string name="ic_user_account">User Account</string>
+    <string name="ic_search">Search</string>
+    <string name="ic_notification">Notification</string>
 </resources>

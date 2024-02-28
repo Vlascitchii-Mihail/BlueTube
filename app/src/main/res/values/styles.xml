@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<!--    Toolbar Style-->
+    <style name="IconToolbar" parent="Widget.Material3.Toolbar">
+        <item name="title">"BlueTube</item>
+        <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+    <style name="ToolbarTextAppearance">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_large</item>
+        <item name="fontFamily">@font/roboto_bold_700</item>
+    </style>
+
 </resources>
