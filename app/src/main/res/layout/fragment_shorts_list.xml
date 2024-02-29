@@ -7,18 +7,17 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.ShortsList">
+        tools:context=".shortslist.screen.ShortsList">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="@string/hello_shorts_list_fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/tb_video_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            style="@style/BlueTubeToolbar.ShortsToolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

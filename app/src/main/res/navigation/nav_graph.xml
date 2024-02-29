@@ -6,12 +6,12 @@
 
     <fragment
         android:id="@+id/videoListFragment"
-        android:name="com.usm.bluetube.ui.VideoList"
+        android:name="com.usm.bluetube.videolist.screen.VideoList"
         android:label="fragment_video_list"/>
 
     <fragment
         android:id="@+id/shortsListFragment"
-        android:name="com.usm.bluetube.ui.ShortsList"
+        android:name="com.usm.bluetube.shortslist.screen.ShortsList"
         android:label="fragment_shorts_list"/>
 
 </navigation>

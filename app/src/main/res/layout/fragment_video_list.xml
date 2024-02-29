@@ -7,29 +7,27 @@
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.VideoList">
+        tools:context=".videolist.screen.VideoList">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/tool_bar"
+            android:id="@+id/tb_video_list"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             app:navigationIcon="@drawable/ic_bluetube_small"
-            style="@style/IconToolbar"
+            style="@style/BlueTubeToolbar.VideoToolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
         </com.google.android.material.appbar.MaterialToolbar>
 
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="0dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_video_list"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="@string/hello_video_list_fragment"
+            app:layout_constraintTop_toBottomOf="@id/tb_video_list"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

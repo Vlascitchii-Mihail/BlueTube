@@ -1,4 +1,4 @@
-package com.usm.bluetube.ui
+package com.usm.bluetube.videolist.screen
 
 import android.os.Bundle
 import android.view.Menu
@@ -9,13 +9,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.usm.bluetube.BaseFragment
 import com.usm.bluetube.R
 import com.usm.bluetube.databinding.FragmentVideoListBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBinding::inflate) {
+
+    private val videoListAdapter: VideoListAdapter by lazy { VideoListAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,11 +33,12 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
     private fun setupView() {
         setupAppBar()
         setupToolbarMenu()
+        setupRecyclerView()
     }
 
     private fun setupAppBar() = with(binding) {
         val appCompatActivity  = activity as AppCompatActivity
-        appCompatActivity.setSupportActionBar(toolBar)
+        appCompatActivity.setSupportActionBar(tbVideoList)
     }
 
     private fun setupToolbarMenu() {
@@ -48,5 +56,17 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
                 return false
             }
         }, viewLifecycleOwner)
+    }
+
+    private fun setupRecyclerView() {
+        with(binding.rvVideoList) {
+            layoutManager = LinearLayoutManager(context)
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    adapter = videoListAdapter
+                }
+            }
+        }
     }
 }
