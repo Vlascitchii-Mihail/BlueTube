@@ -2,8 +2,7 @@
 <resources>
 
 <!--    Toolbar Style-->
-    <style name="IconToolbar" parent="Widget.Material3.Toolbar">
-        <item name="title">"BlueTube</item>
+    <style name="BlueTubeToolbar" parent="Widget.Material3.Toolbar">
         <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
         <item name="android:textSize">@dimen/text_large</item>
     </style>
@@ -12,6 +11,14 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/text_large</item>
         <item name="fontFamily">@font/roboto_bold_700</item>
+    </style>
+
+    <style name="BlueTubeToolbar.VideoToolbar">
+        <item name="title">"@string/app_name</item>
+    </style>
+
+    <style name="BlueTubeToolbar.ShortsToolbar">
+        <item name="title">"@string/shorts_tb_title</item>
     </style>
 
 </resources>

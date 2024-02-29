@@ -1,4 +1,4 @@
-package com.usm.bluetube.ui
+package com.usm.bluetube.shortslist.screen
 
 import android.os.Bundle
 import android.view.View
