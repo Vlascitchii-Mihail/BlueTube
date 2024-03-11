@@ -73,9 +73,13 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.okhttp3)
     implementation(libs.okhttp.urlconnection)
-    implementation(libs.gson.converter)
+    implementation(libs.moshi)
+    implementation(libs.moshi.converter)
+    implementation(libs.moshi.compiler)
     implementation(libs.interceptor)
-    implementation(libs.scalars.converter)
+
+    //datastore
+    implementation(libs.datastore)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

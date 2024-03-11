@@ -13,7 +13,8 @@
             android:id="@+id/tb_video_list"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            style="@style/BlueTubeToolbar.ShortsToolbar"
+            style="@style/BlueTubeToolbar"
+            app:title="@string/shorts_tb_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

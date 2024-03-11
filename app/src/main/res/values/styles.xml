@@ -13,12 +13,4 @@
         <item name="fontFamily">@font/roboto_bold_700</item>
     </style>
 
-    <style name="BlueTubeToolbar.VideoToolbar">
-        <item name="title">"@string/app_name</item>
-    </style>
-
-    <style name="BlueTubeToolbar.ShortsToolbar">
-        <item name="title">"@string/shorts_tb_title</item>
-    </style>
-
 </resources>

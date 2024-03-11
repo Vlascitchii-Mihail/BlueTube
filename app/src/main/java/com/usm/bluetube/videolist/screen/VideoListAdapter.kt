@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.usm.bluetube.databinding.VideoListItemBinding
-import com.usm.bluetube.videolist.model.VideoItem
+import com.usm.bluetube.videolist.model.YoutubeVideos
 
-class VideoListAdapter(): ListAdapter<VideoItem, VideoListAdapter.VideoPreviewViewHolder>(ListItemCallback()) {
+class VideoListAdapter(): ListAdapter<YoutubeVideos, VideoListAdapter.VideoPreviewViewHolder>(ListItemCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoPreviewViewHolder {
         val binding = VideoListItemBinding
@@ -24,16 +24,17 @@ class VideoListAdapter(): ListAdapter<VideoItem, VideoListAdapter.VideoPreviewVi
 
     inner class VideoPreviewViewHolder(private val binding: VideoListItemBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(videoItem: VideoItem) = with(binding) {
+        fun bind(youtubeVideos: YoutubeVideos) = with(binding) {
             //todo bind the video list's item
         }
     }
-    class ListItemCallback: DiffUtil.ItemCallback<VideoItem>() {
-        override fun areItemsTheSame(oldItem: VideoItem, newItem: VideoItem): Boolean {
+
+    class ListItemCallback: DiffUtil.ItemCallback<YoutubeVideos>() {
+        override fun areItemsTheSame(oldItem: YoutubeVideos, newItem: YoutubeVideos): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: VideoItem, newItem: VideoItem): Boolean {
+        override fun areContentsTheSame(oldItem: YoutubeVideos, newItem: YoutubeVideos): Boolean {
             return oldItem == newItem
         }
     }

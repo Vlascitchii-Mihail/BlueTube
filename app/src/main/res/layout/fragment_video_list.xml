@@ -11,14 +11,15 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/tb_video_list"
+            style="@style/BlueTubeToolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            app:navigationIcon="@drawable/ic_bluetube_small"
-            style="@style/BlueTubeToolbar.VideoToolbar"
+            app:title="@string/app_name"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </com.google.android.material.appbar.MaterialToolbar>
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_bluetube_small"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_video_list"
