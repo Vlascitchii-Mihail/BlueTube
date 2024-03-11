@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBinding::inflate) {
 
     private val videoListAdapter: VideoListAdapter by lazy { VideoListAdapter() }
+    private val videListViewModel: VideoListViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,6 +35,7 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
     private fun setupView() {
         setupAppBar()
         setupToolbarMenu()
+        setupObservers()
         setupRecyclerView()
     }
 
@@ -43,6 +46,7 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
 
     private fun setupToolbarMenu() {
         (requireActivity() as MenuHost).addMenuProvider(object: MenuProvider {
+
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.toolbar_menu, menu)
             }
@@ -58,15 +62,27 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
         }, viewLifecycleOwner)
     }
 
+    private fun setupObservers() = with(videListViewModel) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                youtubeResponse.collect { youtubeResponse ->
+                    videoListAdapter.submitList(youtubeResponse.items)
+                }
+            }
+
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                errorMsgResponse.collect {errorMsg ->
+                    Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
     private fun setupRecyclerView() {
         with(binding.rvVideoList) {
             layoutManager = LinearLayoutManager(context)
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    adapter = videoListAdapter
-                }
-            }
+            adapter = videoListAdapter
+            videListViewModel.fetchVideos()
         }
     }
 }

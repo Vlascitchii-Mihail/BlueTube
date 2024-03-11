@@ -1,9 +1,13 @@
 package com.usm.bluetube.videolist.model
 
-data class VideoDetails(
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+data class VideoSnippet(
     val title: String,
     val description: String,
     val publishedAt: String,
     val channelTitle: String,
-    val thumbnails: Map<String, VideoPreviewUrl>
+    val channelId: String,
+    val thumbnails: Thumbnails
 )
