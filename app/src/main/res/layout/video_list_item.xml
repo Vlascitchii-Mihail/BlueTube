@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
+    <data>
+        <variable
+            name="youtubeVideo"
+            type="com.usm.bluetube.videolist.model.YoutubeVideo"/>
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_medium"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_preview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -31,6 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
+            android:text="@{youtubeVideo.snippet.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/img_channel"
             app:layout_constraintTop_toBottomOf="@id/img_preview"
@@ -42,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
+            android:text="@{youtubeVideo.snippet.channelTitle}"
             app:layout_constraintStart_toEndOf="@id/img_channel"
             app:layout_constraintTop_toBottomOf="@id/tv_video_title"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
+            android:text='@{youtubeVideo.statistics.viewCount + ""}'
             app:layout_constraintStart_toEndOf="@id/tv_channel_name"
             app:layout_constraintTop_toBottomOf="@id/tv_video_title"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -62,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
+            android:text="@{youtubeVideo.snippet.publishedAt}"
             app:layout_constraintStart_toEndOf="@id/tv_views_count"
             app:layout_constraintTop_toBottomOf="@id/tv_video_title"
             app:layout_constraintBottom_toBottomOf="parent"

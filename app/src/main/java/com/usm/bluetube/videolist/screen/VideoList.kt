@@ -1,6 +1,7 @@
 package com.usm.bluetube.videolist.screen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -67,12 +68,16 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 youtubeResponse.collect { youtubeResponse ->
                     videoListAdapter.submitList(youtubeResponse.items)
+                    Log.d("VideoList", "setupObservers() called with: youtubeResponse = ${youtubeResponse.items}")
                 }
             }
+        }
 
+        lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                errorMsgResponse.collect {errorMsg ->
+                errorMsgResponse.collect { errorMsg ->
                     Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show()
+                    Log.d("ErrorMessage", errorMsg)
                 }
             }
         }
