@@ -9,9 +9,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,17 +21,22 @@ class VideoListViewModel @Inject constructor(
     val youtubeResponse: StateFlow<YoutubeResponse> = _youtubeResponse
 
     private var _errorMsgResponse: MutableSharedFlow<String> = MutableSharedFlow()
-    val errorMsgResponse: SharedFlow<String> = _errorMsgResponse.asSharedFlow()
+    val errorMsgResponse: SharedFlow<String> = _errorMsgResponse
 
     fun fetchVideos() {
-        try {
-            viewModelScope.launch {
-                videoRepository.fetchVideos()
-                    .onSuccess { _youtubeResponse.value = it }
-                    .onFailure { it.message?.let { errorMsg -> _errorMsgResponse.emit(errorMsg) } }
+        viewModelScope.launch {
+            try {
+                val response = videoRepository.fetchVideos()
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    _youtubeResponse.value = body
+                } else {
+                    _errorMsgResponse.emit("Internal error. Try later.")
+                }
+            } catch (ex: Exception) {
+                _errorMsgResponse.emit("Check your internet Connection")
+                print("Check your internet Connection")
             }
-        } catch (ex: IOException) {
-            ex.message?.let { errorMsg -> _errorMsgResponse.tryEmit(errorMsg) }
         }
     }
 }

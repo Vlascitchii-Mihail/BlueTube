@@ -75,11 +75,14 @@ dependencies {
     implementation(libs.okhttp.urlconnection)
     implementation(libs.moshi)
     implementation(libs.moshi.converter)
-    implementation(libs.moshi.compiler)
+    ksp(libs.moshi.compiler)
     implementation(libs.interceptor)
 
     //datastore
     implementation(libs.datastore)
+
+    //Glide
+    implementation(libs.glide)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
