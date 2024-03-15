@@ -4,7 +4,7 @@
     <data>
         <variable
             name="youtubeVideo"
-            type="com.usm.bluetube.videolist.model.YoutubeVideo"/>
+            type="com.usm.bluetube.videolist.model.videos.YoutubeVideo"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
