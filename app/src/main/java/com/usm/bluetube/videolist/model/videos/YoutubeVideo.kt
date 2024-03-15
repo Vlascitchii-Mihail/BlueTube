@@ -1,4 +1,4 @@
-package com.usm.bluetube.videolist.model
+package com.usm.bluetube.videolist.model.videos
 
 import com.squareup.moshi.JsonClass
 

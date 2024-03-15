@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -16,7 +17,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    private val client = OkHttpClient.Builder().addInterceptor(InterceptorApiRequest()).build()
+    private val interceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+
+    }
+
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(InterceptorApiRequest())
+        .addInterceptor(interceptor)
+        .build()
 
     @Singleton
     @Provides

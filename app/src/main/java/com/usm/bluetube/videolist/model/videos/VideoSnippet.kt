@@ -1,6 +1,7 @@
-package com.usm.bluetube.videolist.model
+package com.usm.bluetube.videolist.model.videos
 
 import com.squareup.moshi.JsonClass
+import com.usm.bluetube.videolist.model.Thumbnails
 
 @JsonClass(generateAdapter = true)
 data class VideoSnippet(
