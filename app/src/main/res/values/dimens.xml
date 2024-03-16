@@ -11,7 +11,7 @@
 
     <!--    Custom margins-->
     <dimen name="toolbar_height">50dp</dimen>
-    <dimen name="bottom_nav_height">75dp</dimen>
+    <dimen name="bottom_nav_height">70dp</dimen>
 
     <!--    Paddings-->
     <dimen name="padding_medium">16dp</dimen>
