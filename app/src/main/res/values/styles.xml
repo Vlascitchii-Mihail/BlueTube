@@ -13,4 +13,8 @@
         <item name="fontFamily">@font/roboto_bold_700</item>
     </style>
 
+    <style name="CircularImage">
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

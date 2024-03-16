@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+        <import type="com.usm.bluetube.util.TextFormatKt"/>
         <variable
             name="youtubeVideo"
             type="com.usm.bluetube.videolist.model.videos.YoutubeVideo"/>
@@ -23,11 +24,12 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_launcher_bluetube_foreground" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img_channel"
             android:layout_width="@dimen/img_channel_small"
             android:layout_height="@dimen/img_channel_small"
             android:layout_margin="@dimen/margin_small"
+            app:shapeAppearanceOverlay="@style/CircularImage"
             app:layout_constraintTop_toBottomOf="@id/img_preview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -61,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
-            android:text='@{youtubeVideo.statistics.viewCount + ""}'
+            android:text="@{TextFormatKt.formatViews(youtubeVideo.statistics.viewCount)}"
             app:layout_constraintStart_toEndOf="@id/tv_channel_name"
             app:layout_constraintTop_toBottomOf="@id/tv_video_title"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -72,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
-            android:text="@{youtubeVideo.snippet.publishedAt}"
+            android:text="@{TextFormatKt.formatDate(youtubeVideo.snippet.publishedAt)}"
             app:layout_constraintStart_toEndOf="@id/tv_views_count"
             app:layout_constraintTop_toBottomOf="@id/tv_video_title"
             app:layout_constraintBottom_toBottomOf="parent"
