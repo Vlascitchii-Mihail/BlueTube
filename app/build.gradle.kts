@@ -84,6 +84,9 @@ dependencies {
     //Glide
     implementation(libs.glide)
 
+    //Paging
+    implementation(libs.paging)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

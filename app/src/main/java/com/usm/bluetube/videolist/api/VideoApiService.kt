@@ -21,6 +21,7 @@ interface VideoApiService {
         @Query("part") part: String = "$SNIPPET, $CONTENT_DETAILS, $STATISTICS",
         @Query("chart") chart: String = MOST_POPULAR,
         @Query("regionCode") regionCode: String = REGION_CODE,
+        @Query("pageToken") nextPageToken: String = ""
     ): Response<YoutubeVideoResponse>
 
     @GET(CHANNELS)

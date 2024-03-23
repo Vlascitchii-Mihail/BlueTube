@@ -5,24 +5,25 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.usm.bluetube.BaseFragment
 import com.usm.bluetube.R
 import com.usm.bluetube.databinding.FragmentVideoListBinding
-import com.usm.bluetube.util.setImage
-import com.usm.bluetube.videolist.model.single_cnannel.YoutubeChannelResponse
-import com.usm.bluetube.videolist.model.videos.YoutubeVideoResponse
+import com.usm.bluetube.videolist.paging.VideoLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,24 +32,34 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
     private val viewModel: VideoListViewModel by viewModels()
 
     private val videoListAdapter: VideoListAdapter by lazy {
-        VideoListAdapter (::fetchChannelImage) { channelImageView: ImageView, url: String ->
-            channelImageView.setImage(url, requireContext())
+        VideoListAdapter().apply {
+            addLoadStateListener { loadState ->
+                with(binding) {
+                    rvVideoList.isVisible = loadState.source.refresh is LoadState.NotLoading
+                    pbListLoadState.isVisible = loadState.source.refresh is LoadState.Loading
+                    btnRetryLoad.isVisible = loadState.source.refresh is LoadState.Error
+                    tvErrorList.isVisible = loadState.source.refresh is LoadState.Error
+                    showToastOnError(loadState)
+                    setRetryListAction(binding.btnRetryLoad)
+                }
+            }
+
         }
     }
 
-    private fun fetchChannelImage(channelId: String, channelImageView: ImageView, itemPosition: Int) {
-        val channelCache = viewModel.channelResponse.replayCache
-        when(channelCache.isNotEmpty()) {
-            true -> {
-                val channel = channelCache[itemPosition].values.first().items.first()
-                if (channel.id == channelId) {
-                    val channelUrl = channel.snippet.thumbnails.medium.url
-                    channelImageView.setImage(channelUrl, requireContext())
-                } else {
-                    viewModel.fetchChannelImage(channelId, channelImageView)
-                }
-            }
-            false -> viewModel.fetchChannelImage(channelId, channelImageView)
+    private fun showToastOnError(loadState: CombinedLoadStates) {
+        val errorState = loadState.source.append as? LoadState.Error
+            ?: loadState.source.prepend as? LoadState.Error
+
+        errorState?.let {
+            Toast.makeText(requireContext(),
+                requireContext().getString(R.string.wrong_internet), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun setRetryListAction(button: Button) {
+        button.setOnClickListener {
+            videoListAdapter.refresh()
         }
     }
 
@@ -91,27 +102,10 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
 
     private fun setupObservers() = with(viewModel) {
 
-        doOnCollectFrom(youtubeVideoResponse) { youtubeResponse: YoutubeVideoResponse ->
-            videoListAdapter.submitList(youtubeResponse.items)
-        }
-
-        doOnCollectFrom(errorMsgResponse) { errorMsg: String ->
-            Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show()
-        }
-
-        doOnCollectFrom(channelResponse) { channelResponse: Map<ImageView, YoutubeChannelResponse> ->
-            channelResponse.keys.first().setImage(
-                channelResponse.values.first().items.first().snippet.thumbnails.medium.url,
-                requireContext()
-            )
-        }
-    }
-
-    private fun <T> doOnCollectFrom(listener: Flow<T>, action: (T) -> Unit) {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                listener.collect { listenedData ->
-                    action(listenedData)
+                videosFlow.collectLatest { newVideos ->
+                    videoListAdapter.submitData(newVideos)
                 }
             }
         }
@@ -120,11 +114,10 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
     private fun setupRecyclerView() {
         with(binding.rvVideoList) {
             layoutManager = LinearLayoutManager(context)
-            adapter = videoListAdapter
-            if (viewModel.youtubeVideoResponse.value.items.isEmpty()) {
-                viewModel.fetchVideos()
-            }
+            adapter = videoListAdapter.withLoadStateHeaderAndFooter(
+                header = VideoLoadStateAdapter { videoListAdapter.retry() },
+                footer = VideoLoadStateAdapter { videoListAdapter.retry() }
+            )
         }
     }
-
 }
