@@ -5,6 +5,9 @@
     <style name="BlueTubeToolbar" parent="Widget.Material3.Toolbar">
         <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
         <item name="android:textSize">@dimen/text_large</item>
+        <item name="navigationIcon">@drawable/ic_bluetube_small</item>
+        <item name="title">@string/app_name</item>
+        <item name="layout_scrollFlags">scroll|enterAlways</item>
     </style>
 
     <style name="ToolbarTextAppearance">
@@ -13,8 +16,37 @@
         <item name="fontFamily">@font/roboto_bold_700</item>
     </style>
 
+
+<!--    Style for Channel Preview-->
     <style name="CircularImage">
         <item name="cornerSize">50%</item>
+    </style>
+
+
+
+<!--    Buttons Style-->
+    <style name="Button" parent="Widget.Material3.Button">
+        <item name="android:fontFamily">@font/roboto_bold_700</item>
+        <item name="android:textSize">@dimen/text_medium_extra</item>
+        <item name="cornerRadius">@dimen/radius_small</item>
+    </style>
+
+    <style name="RefreshButton" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/blueberry_blue</item>
+    </style>
+
+
+
+<!--    TextView Style-->
+    <style name="Text" parent="Widget.AppCompat.TextView"/>
+
+    <style name="TextErrorList" parent="Text">
+        <item name="fontFamily">@font/roboto_medium_500</item>
+        <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:textColor">@color/ultramarine_blue</item>
+        <item name="android:text">@string/wrong_internet</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
 </resources>

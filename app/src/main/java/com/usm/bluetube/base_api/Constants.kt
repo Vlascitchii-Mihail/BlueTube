@@ -14,6 +14,5 @@ class Constants {
         const val MOST_POPULAR = "mostPopular"
         const val REGION_CODE = "US"
         const val SINGLE_CHANNEL = 1
-        const val SAVE_NUMBER_OF_CHANNELS = 5
     }
 }

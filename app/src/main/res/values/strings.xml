@@ -8,6 +8,8 @@
 <!--    Shorts List Fragment-->
     <string name="hello_shorts_list_fragment">Shorts List Fragment</string>
     <string name="shorts_tb_title">Shorts</string>
+    <string name="refresh">Refresh</string>
+    <string name="wrong_internet">Wrong internet connection</string>
 
 <!--    Menu icons-->
     <string name="main_video_list">Main</string>
