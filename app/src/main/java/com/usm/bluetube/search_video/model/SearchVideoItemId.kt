@@ -1,4 +1,4 @@
-package com.usm.bluetube.videolist.model.videos
+package com.usm.bluetube.search_video.model
 
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass
@@ -6,7 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class VideoStatistics(
-    val viewCount: Long = 0,
-    val likeCount: Long = 0,
+data class SearchVideoItemId(
+    val videoId: String = ""
 ): Parcelable

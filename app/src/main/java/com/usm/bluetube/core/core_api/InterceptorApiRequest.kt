@@ -1,6 +1,6 @@
-package com.usm.bluetube.base_api
+package com.usm.bluetube.core.core_api
 
-import com.usm.bluetube.base_api.Constants.Companion.API_KEY
+import com.usm.bluetube.core.core_api.Constants.Companion.API_KEY
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Request
