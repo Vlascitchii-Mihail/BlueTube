@@ -1,3 +1,22 @@
 <resources>
+    <!--    Generics-->
     <string name="app_name">BlueTube</string>
+
+    <!--    Video List Fragment -->
+    <string name="hello_video_list_fragment">Video List Fragment</string>
+
+    <!--    Shorts List Fragment-->
+    <string name="hello_shorts_list_fragment">Shorts List Fragment</string>
+    <string name="shorts_tb_title">Shorts</string>
+    <string name="refresh">Refresh</string>
+    <string name="wrong_internet">Wrong internet connection</string>
+
+    <!--    Menu icons-->
+    <string name="main_video_list">Main</string>
+    <string name="shorts">Shorts</string>
+    <string name="ic_user_account">User Account</string>
+    <string name="ic_search">Search</string>
+    <string name="ic_notification">Notification</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

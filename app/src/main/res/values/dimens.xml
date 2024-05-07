@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Biases-->
+    <dimen name="bias_small_03">0.3</dimen>
+
+    <!--    Margins-->
+    <dimen name="margin_small_8">8dp</dimen>
+    <dimen name="margin_medium_16">16dp</dimen>
+    <dimen name="margin_medium_extra_18">18dp</dimen>
+    <dimen name="margin_large_24">24dp</dimen>
+
+    <!--    Custom margins-->
+    <dimen name="toolbar_height_50">50dp</dimen>
+    <dimen name="bottom_nav_height_70">70dp</dimen>
+    <dimen name="margin_bottom_error_96">96dp</dimen>
+
+    <!--    Paddings-->
+    <dimen name="padding_small_8">8dp</dimen>
+    <dimen name="padding_medium_16">16dp</dimen>
+    <dimen name="padding_large_24">24dp</dimen>
+    <dimen name="padding_tiny_4">4dp</dimen>
+
+    <!--    Text size-->
+    <dimen name="text_small_12">12sp</dimen>
+    <dimen name="text_medium_14">14sp</dimen>
+    <dimen name="text_medium_extra_16">16sp</dimen>
+    <dimen name="text_large_18">18sp</dimen>
+    <dimen name="text_xlarge_24">24sp</dimen>
+
+    <!--    View sizes-->
+    <dimen name="img_channel_small_50">50dp</dimen>
+
+    <!--    Stroke-->
+    <dimen name="stroke_tiny_1">1dp</dimen>
+    <dimen name="parking_spot_circle_radius_8">8dp</dimen>
+
+    <!--    AvailabilityIndicator-->
+    <dimen name="indicator_size_40">40dp</dimen>
+
+    <!--    Corner radius-->
+    <dimen name="radius_small_10">10dp</dimen>
+    <dimen name="radius_medium_30">30dp</dimen>
+    <dimen name="radius_large_50">50dp</dimen>
+</resources>

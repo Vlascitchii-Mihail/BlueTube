@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/videoListFragment">
+
+    <fragment
+        android:id="@+id/videoListFragment"
+        android:name="com.usm.bluetube.videolist.screen.VideoList"
+        android:label="fragment_video_list">
+
+        <action
+            android:id="@+id/action_videoListFragment_to_videoPlayerFragment"
+            app:destination="@id/videoPlayerFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/videoPlayerFragment"
+        android:name="com.usm.bluetube.video_player.screen.VideoPlayer"
+        android:label="fragment_video_player">
+        <argument
+            android:name="video"
+            app:argType="com.usm.bluetube.videolist.model.videos.YoutubeVideo"/>
+        <action
+            android:id="@+id/openNewVideo"
+            app:destination="@id/videoPlayerFragment"
+            app:popUpTo="@id/videoListFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/shortsListFragment"
+        android:name="com.usm.bluetube.shortslist.screen.ShortsList"
+        android:label="fragment_shorts_list"/>
+
+</navigation>

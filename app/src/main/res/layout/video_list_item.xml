@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.usm.bluetube.core.core_util.TextFormatKt"/>
+        <variable
+            name="youtubeVideo"
+            type="com.usm.bluetube.videolist.model.videos.YoutubeVideo"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_medium_16">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_preview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_launcher_bluetube_foreground" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_channel"
+            android:layout_width="@dimen/img_channel_small_50"
+            android:layout_height="@dimen/img_channel_small_50"
+            android:layout_margin="@dimen/margin_small_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_preview"
+            app:shapeAppearanceOverlay="@style/CircularImage"
+            tools:src="@drawable/ic_launcher_bluetube_foreground" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_video_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/Heading_14_500"
+            android:layout_marginHorizontal="@dimen/margin_small_8"
+            android:text="@{youtubeVideo.snippet.title}"
+            app:layout_constraintBottom_toTopOf="@id/tv_channel_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_channel"
+            app:layout_constraintTop_toBottomOf="@id/img_preview"
+            tools:text="New Funny Cat and Dog Videos" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_channel_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Heading_14_400"
+            android:text="@{youtubeVideo.snippet.channelTitle}"
+            tools:text="Channel Name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_views_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Heading_14_400"
+            android:text='@{TextFormatKt.formatCount(youtubeVideo.statistics.viewCount) + " views"}'
+            tools:text="2.2M views" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_upload_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Heading_14_400"
+            android:text="@{TextFormatKt.formatDate(youtubeVideo.snippet.publishedAt)}"
+            tools:text="7 days ago" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_small_8"
+            app:constraint_referenced_ids="tv_channel_name,tv_views_count,tv_upload_date"
+            app:flow_horizontalAlign="start"
+            app:flow_horizontalBias="0"
+            app:flow_horizontalGap="@dimen/margin_small_8"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.533"
+            app:layout_constraintStart_toEndOf="@id/img_channel"
+            app:layout_constraintTop_toBottomOf="@id/tv_video_title"
+            app:layout_constraintVertical_bias="0.526" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
