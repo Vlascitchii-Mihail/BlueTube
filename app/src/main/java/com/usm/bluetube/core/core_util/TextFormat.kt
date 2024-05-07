@@ -1,4 +1,4 @@
-package com.usm.bluetube.util
+package com.usm.bluetube.core.core_util
 
 import java.time.Duration
 import java.time.LocalDateTime
@@ -16,12 +16,12 @@ const val DAYS_PER_MONTH = 31
 const val DAYS_PER_YEAR = 365
 const val MONTHS_PER_YEAR = 12
 
-fun formatViews(views: Long): String {
+fun formatCount(views: Long): String {
     return when(true) {
         (views < THOUSAND) -> views.toString()
-        (views < MILLION) -> "${(views / THOUSAND).toInt()}K views"
-        (views < MILLIARD) -> "${(views / MILLION).toInt()}M views"
-        else -> "${(views / TRILLION).toInt()}MLR views"
+        (views < MILLION) -> "${(views / THOUSAND).toInt()}K"
+        (views < MILLIARD) -> "${(views / MILLION).toInt()}M"
+        else -> "${(views / TRILLION).toInt()}MLR"
     }
 }
 

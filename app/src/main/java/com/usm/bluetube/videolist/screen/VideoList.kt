@@ -15,13 +15,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.usm.bluetube.BaseFragment
 import com.usm.bluetube.R
 import com.usm.bluetube.databinding.FragmentVideoListBinding
-import com.usm.bluetube.videolist.paging.VideoLoadStateAdapter
+import com.usm.bluetube.videolist.model.videos.YoutubeVideo
+import com.usm.bluetube.core.core_paging.VideoLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -32,18 +35,21 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
     private val viewModel: VideoListViewModel by viewModels()
 
     private val videoListAdapter: VideoListAdapter by lazy {
-        VideoListAdapter().apply {
+        VideoListAdapter(viewModel.viewModelScope) { youtubeVideo: YoutubeVideo ->
+            findNavController().navigate(
+                VideoListDirections.actionVideoListFragmentToVideoPlayerFragment(youtubeVideo)
+            )
+        }.apply {
             addLoadStateListener { loadState ->
                 with(binding) {
                     rvVideoList.isVisible = loadState.source.refresh is LoadState.NotLoading
                     pbListLoadState.isVisible = loadState.source.refresh is LoadState.Loading
-                    btnRetryLoad.isVisible = loadState.source.refresh is LoadState.Error
-                    tvErrorList.isVisible = loadState.source.refresh is LoadState.Error
+                    btnRetryLoad.isVisible = loadState.source.refresh is LoadState.Error && this@apply.itemCount == 0
+                    tvErrorList.isVisible = loadState.source.refresh is LoadState.Error && this@apply.itemCount == 0
                     showToastOnError(loadState)
-                    setRetryListAction(binding.btnRetryLoad)
+                    setRetryListAction(btnRetryLoad)
                 }
             }
-
         }
     }
 
@@ -101,7 +107,6 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
     }
 
     private fun setupObservers() = with(viewModel) {
-
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 videosFlow.collectLatest { newVideos ->

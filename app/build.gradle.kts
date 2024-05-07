@@ -1,9 +1,13 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kapt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.safe.args.plugin)
+    alias(libs.plugins.parcelize)
 }
 
 android {
@@ -18,6 +22,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val properties: Properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        buildConfigField("String", "API_KEY", properties.getProperty("API_KEY"))
     }
 
     buildTypes {
@@ -38,6 +46,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
 }
 
@@ -86,6 +95,10 @@ dependencies {
 
     //Paging
     implementation(libs.paging)
+
+    //Youtube player
+    implementation(libs.youtube.player)
+    implementation(libs.youtube.player.ui)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

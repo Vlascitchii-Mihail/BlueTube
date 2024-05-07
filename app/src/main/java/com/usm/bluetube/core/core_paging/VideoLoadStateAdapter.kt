@@ -1,4 +1,4 @@
-package com.usm.bluetube.videolist.paging
+package com.usm.bluetube.core.core_paging
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -26,6 +26,7 @@ class VideoLoadStateAdapter(
                 pbListLoadState.isVisible = loadState is LoadState.Loading
                 btnRetryLoad.isVisible = loadState !is LoadState.Loading
                 tvErrorList.isVisible = loadState !is LoadState.Loading
+                if (loadState is LoadState.Error) tvErrorList.text = loadState.error.localizedMessage
             }
         }
     }

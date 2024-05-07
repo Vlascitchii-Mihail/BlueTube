@@ -1,8 +1,8 @@
-package com.usm.bluetube.base_di
+package com.usm.bluetube.core.core_di
 
-import com.usm.bluetube.base_api.Constants.Companion.BASE_URL
-import com.usm.bluetube.base_api.InterceptorApiRequest
-import com.usm.bluetube.videolist.api.VideoApiService
+import com.usm.bluetube.core.core_api.Constants.Companion.BASE_URL
+import com.usm.bluetube.core.core_api.InterceptorApiRequest
+import com.usm.bluetube.core.core_api.VideoApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiModule {
+object NetworkApiModule {
 
     private val interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -29,11 +29,14 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideApi(): VideoApiService =
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
-            .client(client)
-            .build()
-            .create(VideoApiService::class.java)
+    fun provideRetrofit(): Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .client(client)
+        .build()
+
+    @Singleton
+    @Provides
+    fun provideVideoListApi(retrofit: Retrofit): VideoApiService =
+        retrofit.create(VideoApiService::class.java)
 }

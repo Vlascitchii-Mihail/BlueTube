@@ -7,7 +7,25 @@
     <fragment
         android:id="@+id/videoListFragment"
         android:name="com.usm.bluetube.videolist.screen.VideoList"
-        android:label="fragment_video_list"/>
+        android:label="fragment_video_list">
+
+        <action
+            android:id="@+id/action_videoListFragment_to_videoPlayerFragment"
+            app:destination="@id/videoPlayerFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/videoPlayerFragment"
+        android:name="com.usm.bluetube.video_player.screen.VideoPlayer"
+        android:label="fragment_video_player">
+        <argument
+            android:name="video"
+            app:argType="com.usm.bluetube.videolist.model.videos.YoutubeVideo"/>
+        <action
+            android:id="@+id/openNewVideo"
+            app:destination="@id/videoPlayerFragment"
+            app:popUpTo="@id/videoListFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/shortsListFragment"
