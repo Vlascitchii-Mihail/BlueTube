@@ -76,9 +76,9 @@
 
 
 <!--    Bottom Navigation Color style-->
-    <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/blueberry_blue</item>
-        <item name="android:textColorSecondary">@color/ultramarine_blue</item>
+    <style name="BottomNavigationTheme" parent="Widget.MaterialComponents.BottomNavigationView">
+<!--        <item name="itemRippleColor">@color/pastel_blue</item>-->
+<!--        <item name="itemTextColor">@color/blueberry_blue</item>-->
     </style>
 
 </resources>

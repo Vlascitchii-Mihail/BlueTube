@@ -29,11 +29,11 @@ class YoutubeVideoSource(
             val nextPageToken = params.key ?: ""
             val videos = getLoadData(nextPageToken, videoType)
 
-            Log.d("YoutubeVideoSource", "load() video result = ${videos?.items?.size}")
+            Log.d("YoutubeVideoSource", "load() video result = ${videos.items.size}")
             LoadResult.Page(
-                data = videos?.items ?: emptyList(),
-                prevKey = videos?.prevPageToken,
-                nextKey = videos?.nextPageToken
+                data = videos.items,
+                prevKey = videos.prevPageToken,
+                nextKey = videos.nextPageToken
             )
         } catch (ex: IOException) {
             return LoadResult.Error(ex)
@@ -44,7 +44,7 @@ class YoutubeVideoSource(
         }
     }
 
-    private suspend fun getLoadData(nextPageToken: String, videoType: VideoType): YoutubeVideoResponse? {
+    private suspend fun getLoadData(nextPageToken: String, videoType: VideoType): YoutubeVideoResponse {
         return when(videoType) {
             is VideoType.Videos -> fetchVideos(nextPageToken)
             is VideoType.SearchedVideo -> fetchSearchedVideos(videoType.query, nextPageToken)

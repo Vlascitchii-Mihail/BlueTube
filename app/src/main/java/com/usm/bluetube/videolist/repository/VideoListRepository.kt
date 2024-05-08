@@ -39,9 +39,9 @@ class VideoListRepositoryImpl @Inject constructor(
     override fun fetchSearchVideos(videoType: VideoType, viewModelScope: CoroutineScope): Flow<PagingData<YoutubeVideo>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 2,
-                maxSize = 12,
-                prefetchDistance = 4,
+                pageSize = 5,
+                maxSize = 25,
+                prefetchDistance = 10,
                 enablePlaceholders = true
             ),
             pagingSourceFactory = {

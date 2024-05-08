@@ -20,5 +20,7 @@ class Constants {
         const val REGION_CODE = "US"
         const val SINGLE_CHANNEL = 1
         const val RELEVANCE = "relevance"
+
+        const val INPUT_DELAY: Long = 1000
     }
 }

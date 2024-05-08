@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
@@ -19,13 +20,19 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.usm.bluetube.BaseFragment
 import com.usm.bluetube.R
+import com.usm.bluetube.core.core_api.Constants.Companion.INPUT_DELAY
 import com.usm.bluetube.databinding.FragmentVideoListBinding
 import com.usm.bluetube.videolist.model.videos.YoutubeVideo
 import com.usm.bluetube.core.core_paging.VideoLoadStateAdapter
+import com.usm.bluetube.core.core_util.setupBackground
+import com.usm.bluetube.core.core_util.setupFont
+import com.usm.bluetube.search_video.SearchInputDelay
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -33,6 +40,7 @@ import kotlinx.coroutines.launch
 class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBinding::inflate) {
 
     private val viewModel: VideoListViewModel by viewModels()
+    private val searchInputDelay = SearchInputDelay()
 
     private val videoListAdapter: VideoListAdapter by lazy {
         VideoListAdapter(viewModel.viewModelScope) { youtubeVideo: YoutubeVideo ->
@@ -44,8 +52,8 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
                 with(binding) {
                     rvVideoList.isVisible = loadState.source.refresh is LoadState.NotLoading
                     pbListLoadState.isVisible = loadState.source.refresh is LoadState.Loading
-                    btnRetryLoad.isVisible = loadState.source.refresh is LoadState.Error && this@apply.itemCount == 0
-                    tvErrorList.isVisible = loadState.source.refresh is LoadState.Error && this@apply.itemCount == 0
+                    btnRetryLoad.isVisible = loadState.source.refresh is LoadState.Error
+                    tvErrorList.isVisible = loadState.source.refresh is LoadState.Error
                     showToastOnError(loadState)
                     setRetryListAction(btnRetryLoad)
                 }
@@ -78,7 +86,7 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
     private fun setupView() {
         setupAppBar()
         setupToolbarMenu()
-        setupObservers()
+        listenTo(viewModel.videoFlow)
         setupRecyclerView()
     }
 
@@ -92,24 +100,47 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.toolbar_menu, menu)
+                val searchView = menu.findItem(R.id.ic_search_video).actionView as SearchView
+                searchView.setupFont(R.font.roboto_medium_500)
+                searchView.setupBackground(requireContext(), R.drawable.searchview_background)
+                searchView.setupSearchAction()
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when(menuItem.itemId) {
-                    //todo: perform different actions on menu item selected
-                    R.id.ic_user -> Toast.makeText(requireContext(), "User icon", Toast.LENGTH_LONG).show()
-                    R.id.ic_notify_bell -> Toast.makeText(requireContext(), "Notify", Toast.LENGTH_LONG).show()
-                    R.id.ic_search_video -> Toast.makeText(requireContext(), "Search", Toast.LENGTH_LONG).show()
-                }
                 return false
             }
         }, viewLifecycleOwner)
     }
 
-    private fun setupObservers() = with(viewModel) {
+    private fun SearchView.setupSearchAction() {
+        this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                makeDelayedQuery(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                makeDelayedQuery(newText)
+                return false
+            }
+        })
+    }
+
+    private fun makeDelayedQuery(newText: String?) {
+        searchInputDelay.setInputDelay(
+            INPUT_DELAY,
+            viewModel.viewModelScope
+        ) {
+            if (newText != null && newText != "") {
+                listenTo(viewModel.getSearchVideosFlow(newText))
+            }
+        }
+    }
+
+    private fun listenTo(videoFlow: StateFlow<PagingData<YoutubeVideo>>) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                videosFlow.collectLatest { newVideos ->
+                videoFlow.collectLatest { newVideos ->
                     videoListAdapter.submitData(newVideos)
                 }
             }

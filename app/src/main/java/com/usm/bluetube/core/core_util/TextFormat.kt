@@ -1,5 +1,10 @@
 package com.usm.bluetube.core.core_util
 
+import android.content.Context
+import android.view.View
+import android.widget.TextView
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -43,4 +48,13 @@ fun formatDate(date: String): String {
         (days < DAYS_PER_YEAR) -> "${days / MONTHS_PER_YEAR} months ago"
         else -> "${days / DAYS_PER_YEAR} years ago"
     }
+}
+
+fun SearchView.setupFont(fontId: Int) {
+    val searchText = this.findViewById<View>(androidx.appcompat.R.id.search_src_text) as TextView
+    searchText.typeface = resources.getFont(fontId)
+}
+
+fun SearchView.setupBackground(context: Context, drawableId: Int) {
+    this.background = ContextCompat.getDrawable(context, drawableId)
 }
