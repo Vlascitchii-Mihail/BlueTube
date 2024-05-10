@@ -2,6 +2,16 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.BlueTube" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+        <!--        buttons, bottomNavIcons, bottomNavTintColor.-->
+        <item name="colorPrimary">@color/blueberry_blue</item>
+
+        <!--        status bar (via statusBarColor)-->
+        <item name="colorPrimaryDark">@color/blueberry_blue</item>
+
+        <!--        Toolbar text-->
+        <item name="colorOnSecondary">@color/white</item>
+        <!--        button text-->
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 </resources>

@@ -29,7 +29,7 @@ import com.usm.bluetube.databinding.FragmentVideoListBinding
 import com.usm.bluetube.videolist.model.videos.YoutubeVideo
 import com.usm.bluetube.core.core_paging.VideoLoadStateAdapter
 import com.usm.bluetube.core.core_util.setupBackground
-import com.usm.bluetube.core.core_util.setupFont
+import com.usm.bluetube.core.core_util.setupTextAppearance
 import com.usm.bluetube.search_video.SearchInputDelay
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.StateFlow
@@ -101,7 +101,7 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.toolbar_menu, menu)
                 val searchView = menu.findItem(R.id.ic_search_video).actionView as SearchView
-                searchView.setupFont(R.font.roboto_medium_500)
+                searchView.setupTextAppearance(requireContext(), R.font.roboto_medium_500)
                 searchView.setupBackground(requireContext(), R.drawable.searchview_background)
                 searchView.setupSearchAction()
             }

@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import com.usm.bluetube.R
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -50,9 +51,10 @@ fun formatDate(date: String): String {
     }
 }
 
-fun SearchView.setupFont(fontId: Int) {
+fun SearchView.setupTextAppearance(context: Context, fontId: Int) {
     val searchText = this.findViewById<View>(androidx.appcompat.R.id.search_src_text) as TextView
     searchText.typeface = resources.getFont(fontId)
+    searchText.setTextColor(ContextCompat.getColor(context, R.color.black))
 }
 
 fun SearchView.setupBackground(context: Context, drawableId: Int) {

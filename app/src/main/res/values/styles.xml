@@ -5,13 +5,14 @@
     <style name="BlueTubeToolbar" parent="Widget.Material3.Toolbar">
         <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
         <item name="android:textSize">@dimen/text_large_18</item>
+<!--        <item name="android:background">?attr/colorOnPrimary</item>-->
         <item name="navigationIcon">@drawable/ic_bluetube_small</item>
         <item name="title">@string/app_name</item>
         <item name="layout_scrollFlags">scroll|enterAlways</item>
     </style>
 
     <style name="ToolbarTextAppearance">
-        <item name="android:textColor">@color/black</item>
+<!--        <item name="android:textColor">?attr/colorOnSecondary</item>-->
         <item name="android:textSize">@dimen/text_large_18</item>
         <item name="fontFamily">@font/roboto_bold_700</item>
     </style>
@@ -30,12 +31,6 @@
         <item name="android:textSize">@dimen/text_medium_extra_16</item>
         <item name="cornerRadius">@dimen/radius_small_10</item>
     </style>
-
-    <style name="RefreshButton" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="backgroundTint">@color/blueberry_blue</item>
-    </style>
-
 
 
 <!--    TextView Style-->
@@ -65,7 +60,6 @@
     <style name="TextErrorList" parent="Text">
         <item name="fontFamily">@font/roboto_medium_500</item>
         <item name="android:textSize">@dimen/text_large_18</item>
-        <item name="android:textColor">@color/ultramarine_blue</item>
         <item name="android:text">@string/wrong_internet</item>
         <item name="android:textAlignment">center</item>
     </style>
@@ -77,8 +71,6 @@
 
 <!--    Bottom Navigation Color style-->
     <style name="BottomNavigationTheme" parent="Widget.MaterialComponents.BottomNavigationView">
-<!--        <item name="itemRippleColor">@color/pastel_blue</item>-->
-<!--        <item name="itemTextColor">@color/blueberry_blue</item>-->
     </style>
 
 </resources>
