@@ -29,7 +29,6 @@ class YoutubeVideoSource(
             val nextPageToken = params.key ?: ""
             val videos = getLoadData(nextPageToken, videoType)
 
-            Log.d("YoutubeVideoSource", "load() video result = ${videos.items.size}")
             LoadResult.Page(
                 data = videos.items,
                 prevKey = videos.prevPageToken,
@@ -52,9 +51,6 @@ class YoutubeVideoSource(
     }
 
     private suspend fun fetchVideos(nextPageToken: String): YoutubeVideoResponse {
-
-        //TODO: try to use runCatching
-//        val videos1 = Result.runCatching { apiService.fetchVideos(nextPageToken = nextPageToken) }
         val videos = apiService.fetchVideos(nextPageToken = nextPageToken).body()!!
         videos.items.addChannelUrl()
         Log.d("fetchVideos", "fetchVideos() called with: nextPageToken = ${videos.items.size}")
@@ -110,7 +106,6 @@ class YoutubeVideoSource(
         return video.items.first()
     }
 
-    //TODO: use async/await pattern
     private suspend fun getChannelsUrl(videos: List<YoutubeVideo>): List<String> {
         val channelUrlList: MutableList<Deferred<String>> = mutableListOf()
         coroutineScope {
