@@ -22,6 +22,8 @@ const val DAYS_PER_MONTH = 31
 const val DAYS_PER_YEAR = 365
 const val MONTHS_PER_YEAR = 12
 
+const val VIDEO_LENGTH_SECONDS = 2
+
 fun formatCount(views: Long): String {
     return when(true) {
         (views < THOUSAND) -> views.toString()
@@ -49,6 +51,15 @@ fun formatDate(date: String): String {
         (days < DAYS_PER_YEAR) -> "${days / MONTHS_PER_YEAR} months ago"
         else -> "${days / DAYS_PER_YEAR} years ago"
     }
+}
+
+fun formatVideoDuration(duration: String): String {
+    return duration.replace("PT", "")
+        .replace("S", "").let { string ->
+            if (string.length == VIDEO_LENGTH_SECONDS) "0:$string"
+            else string
+        }
+        .replace("[A-Z]".toRegex(), ":")
 }
 
 fun SearchView.setupTextAppearance(context: Context, fontId: Int) {

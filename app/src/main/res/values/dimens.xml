@@ -5,6 +5,7 @@
 
     <!--    Margins-->
     <dimen name="margin_small_8">8dp</dimen>
+    <dimen name="margin_small_extra_12">12dp</dimen>
     <dimen name="margin_medium_16">16dp</dimen>
     <dimen name="margin_medium_extra_18">18dp</dimen>
     <dimen name="margin_large_24">24dp</dimen>
@@ -15,10 +16,10 @@
     <dimen name="margin_bottom_error_96">96dp</dimen>
 
     <!--    Paddings-->
+    <dimen name="padding_tiny_4">4dp</dimen>
     <dimen name="padding_small_8">8dp</dimen>
     <dimen name="padding_medium_16">16dp</dimen>
     <dimen name="padding_large_24">24dp</dimen>
-    <dimen name="padding_tiny_4">4dp</dimen>
 
     <!--    Text size-->
     <dimen name="text_small_12">12sp</dimen>

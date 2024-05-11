@@ -24,6 +24,18 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_launcher_bluetube_foreground" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_video_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/VideoDurationTime"
+            android:layout_margin="@dimen/margin_small_extra_12"
+            android:padding="@dimen/padding_tiny_4"
+            android:text="@{TextFormatKt.formatVideoDuration(youtubeVideo.contentDetails.duration)}"
+            app:layout_constraintEnd_toEndOf="@id/img_preview"
+            app:layout_constraintBottom_toBottomOf="@id/img_preview"
+            tools:text="20:33"/>
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img_channel"
             android:layout_width="@dimen/img_channel_small_50"
