@@ -20,7 +20,7 @@ interface VideoApiService {
 
     @GET(LIST_OF_VIDEOS)
     suspend fun fetchVideos(
-        @Query("part") part: String = "$SNIPPET, $STATISTICS",
+        @Query("part") part: String = "$SNIPPET, $CONTENT_DETAILS, $STATISTICS",
         @Query("chart") chart: String = MOST_POPULAR,
         @Query("regionCode") regionCode: String = REGION_CODE,
         @Query("pageToken") nextPageToken: String = ""
@@ -44,6 +44,6 @@ interface VideoApiService {
     @GET(LIST_OF_VIDEOS)
     suspend fun fetchParticularVideo(
         @Query("id") id: String,
-        @Query("part") part: String = "$SNIPPET, $STATISTICS"
+        @Query("part") part: String = "$SNIPPET, $CONTENT_DETAILS, $STATISTICS"
     ): Response<ParticularVideo>
 }

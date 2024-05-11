@@ -5,14 +5,12 @@
     <style name="BlueTubeToolbar" parent="Widget.Material3.Toolbar">
         <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
         <item name="android:textSize">@dimen/text_large_18</item>
-<!--        <item name="android:background">?attr/colorOnPrimary</item>-->
         <item name="navigationIcon">@drawable/ic_bluetube_small</item>
         <item name="title">@string/app_name</item>
         <item name="layout_scrollFlags">scroll|enterAlways</item>
     </style>
 
     <style name="ToolbarTextAppearance">
-<!--        <item name="android:textColor">?attr/colorOnSecondary</item>-->
         <item name="android:textSize">@dimen/text_large_18</item>
         <item name="fontFamily">@font/roboto_bold_700</item>
     </style>
@@ -25,7 +23,6 @@
 
 
 
-<!--    Buttons Style-->
     <style name="Button" parent="Widget.Material3.Button">
         <item name="android:fontFamily">@font/roboto_bold_700</item>
         <item name="android:textSize">@dimen/text_medium_extra_16</item>
@@ -69,8 +66,14 @@
     </style>
 
 
-<!--    Bottom Navigation Color style-->
+
     <style name="BottomNavigationTheme" parent="Widget.MaterialComponents.BottomNavigationView">
+    </style>
+
+
+    <style name="VideoDurationTime" parent="Heading_14_500">
+        <item name="android:background">@drawable/video_duration_background</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

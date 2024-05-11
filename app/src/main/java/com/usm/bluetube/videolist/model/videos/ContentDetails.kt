@@ -6,9 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class YoutubeVideo(
-    val id: String,
-    val snippet: VideoSnippet,
-    val statistics: VideoStatistics,
-    val contentDetails: ContentDetails
+data class ContentDetails(
+    val duration: String = ""
 ): Parcelable

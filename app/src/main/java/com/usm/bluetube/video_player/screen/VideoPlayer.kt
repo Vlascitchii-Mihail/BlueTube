@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -131,6 +132,7 @@ class VideoPlayer : BaseFragment<FragmentPlayVideoBinding>(FragmentPlayVideoBind
                 addView(fullscreenView)
             }
         }
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
     private fun setPortraitVisibility() {
@@ -142,6 +144,7 @@ class VideoPlayer : BaseFragment<FragmentPlayVideoBinding>(FragmentPlayVideoBind
             }
             rvRelatedVideo.visibility = View.VISIBLE
         }
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
     private fun changeToLandscapeOrientation(activity: Activity) {
