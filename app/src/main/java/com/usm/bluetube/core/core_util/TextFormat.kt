@@ -33,11 +33,14 @@ fun formatCount(views: Long): String {
     }
 }
 
-fun formatDate(date: String): String {
-    val postedDate = LocalDateTime.parse(
-        date.substring(0, 19),
-        DateTimeFormatter.ISO_LOCAL_DATE_TIME
-    )
+fun formatDate(date: String?): String {
+    val postedDate: LocalDateTime = if (date != null) {
+        LocalDateTime.parse(
+            date.substring(0, 19),
+            DateTimeFormatter.ISO_LOCAL_DATE_TIME
+        )
+    } else LocalDateTime.now()
+
     val currentDate = LocalDateTime.now()
     val postedAgo = Duration.between(postedDate, currentDate)
     val seconds = postedAgo.seconds
@@ -49,17 +52,17 @@ fun formatDate(date: String): String {
         (hours < HOURS_PER_DAY) -> "$hours hours ago"
         (days < DAYS_PER_MONTH) -> "$days days ago"
         (days < DAYS_PER_YEAR) -> "${days / MONTHS_PER_YEAR} months ago"
+        (date == null) -> "null"
         else -> "${days / DAYS_PER_YEAR} years ago"
     }
 }
 
-fun formatVideoDuration(duration: String): String {
-    return duration.replace("PT", "")
-        .replace("S", "").let { string ->
-            if (string.length == VIDEO_LENGTH_SECONDS) "0:$string"
-            else string
-        }
-        .replace("[A-Z]".toRegex(), ":")
+fun formatVideoDuration(duration: String?): String {
+    return duration?.replace("PT", "")?.replace("S", "")?.let { string ->
+        if (string.length == VIDEO_LENGTH_SECONDS) "0:$string"
+        else string
+    }?.replace("[A-Z]".toRegex(), ":")
+        ?: "null"
 }
 
 fun SearchView.setupTextAppearance(context: Context, fontId: Int) {

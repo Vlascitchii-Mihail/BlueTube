@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.usm.bluetube.core.core_util.TextFormatKt"/>
+        <variable
+            name="youtubeVideo"
+            type="com.usm.bluetube.videolist.model.videos.YoutubeVideo"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/yt_player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_shorts_channel"
+            android:layout_width="@dimen/img_channel_small_50"
+            android:layout_height="@dimen/img_channel_small_50"
+            android:translationZ="1dp"
+            app:shapeAppearanceOverlay="@style/CircularImage"
+            android:layout_marginStart="@dimen/margin_large_24"
+            android:layout_marginBottom="@dimen/margin_small_8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_shorts_title"
+            tools:src="@drawable/ic_launcher_bluetube_foreground" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_channel_name"
+            style="@style/Heading_14_700"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:translationZ="1dp"
+            android:layout_marginStart="@dimen/margin_small_8"
+            android:text="@{youtubeVideo.snippet.channelTitle}"
+            tools:text="Channel Name"
+            app:layout_constraintStart_toEndOf="@id/img_shorts_channel"
+            app:layout_constraintTop_toTopOf="@id/img_shorts_channel"
+            app:layout_constraintBottom_toBottomOf="@id/img_shorts_channel"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_shorts_title"
+            style="@style/Heading_14_700"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:translationZ="1dp"
+            android:layout_marginStart="@dimen/margin_large_24"
+            android:layout_marginBottom="@dimen/margin_large_extra_70"
+            android:text="@{youtubeVideo.snippet.title}"
+            tools:text="Shorts Title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+

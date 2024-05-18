@@ -21,6 +21,12 @@ class Constants {
         const val SINGLE_CHANNEL = 1
         const val RELEVANCE = "relevance"
 
+        const val CONTENT_VIDEO_TYPE = "video"
+        const val SHORTS_VIDEO_DURATION = "short"
+
         const val INPUT_DELAY: Long = 1000
+
+        const val FIRST_ELEMENT = 0
+        const val PLAYER_LOAD_VIDEO_DELAY = 2000L
     }
 }

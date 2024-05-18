@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.usm.bluetube.databinding.VideoListItemBinding
 import com.usm.bluetube.core.core_util.setImage
+import com.usm.bluetube.databinding.VideoListItemBinding
 import com.usm.bluetube.videolist.model.videos.YoutubeVideo
 import kotlinx.coroutines.CoroutineScope
 

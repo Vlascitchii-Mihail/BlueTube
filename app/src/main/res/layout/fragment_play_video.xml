@@ -33,7 +33,7 @@
             android:layout_margin="@dimen/margin_small_8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/yt_player"
+            app:layout_constraintTop_toBottomOf="@id/yt_player"
             tools:text="Video Description" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -44,7 +44,7 @@
             android:layout_margin="@dimen/margin_small_8"
             android:text='@{TextFormatKt.formatCount(youtubeVideo.statistics.viewCount) + " views"}'
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_video_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_video_title"
             tools:text="2.2M views" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -89,8 +89,7 @@
             tools:text="500.45 K" />
 
         <androidx.constraintlayout.helper.widget.Flow
-            android:id="@+id/flow"
-            android:layout_width="0dp"
+            android:id="@+id/flow" android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small_8"
             app:constraint_referenced_ids="tv_channel_name,tv_channel_subs"
@@ -114,7 +113,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_channel"/>
+            app:layout_constraintTop_toBottomOf="@id/img_channel"/>
 
         <FrameLayout
             android:id="@+id/fl_full_screen_container"
@@ -129,10 +128,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminateDrawable="@drawable/load_spinner"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/yt_player" />
+            app:layout_constraintTop_toTopOf="@id/rv_related_video" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_error_list"
@@ -141,8 +141,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="@dimen/margin_bottom_error_96"
-            app:layout_constraintBottom_toBottomOf="@+id/rv_related_video"
-            app:layout_constraintStart_toStartOf="@+id/fl_full_screen_container" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_retry_load"
@@ -152,7 +154,8 @@
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/margin_large_24"
             android:text="@string/refresh"
-            app:layout_constraintBottom_toBottomOf="@+id/rv_related_video"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

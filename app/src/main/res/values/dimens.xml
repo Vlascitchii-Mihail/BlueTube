@@ -9,6 +9,7 @@
     <dimen name="margin_medium_16">16dp</dimen>
     <dimen name="margin_medium_extra_18">18dp</dimen>
     <dimen name="margin_large_24">24dp</dimen>
+    <dimen name="margin_large_extra_70">70dp</dimen>
 
     <!--    Custom margins-->
     <dimen name="toolbar_height_50">50dp</dimen>
