@@ -4,7 +4,6 @@
 <!--    Toolbar Style-->
     <style name="BlueTubeToolbar" parent="Widget.Material3.Toolbar">
         <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
-        <item name="android:textSize">@dimen/text_large_18</item>
         <item name="navigationIcon">@drawable/ic_bluetube_small</item>
         <item name="title">@string/app_name</item>
         <item name="layout_scrollFlags">scroll|enterAlways</item>

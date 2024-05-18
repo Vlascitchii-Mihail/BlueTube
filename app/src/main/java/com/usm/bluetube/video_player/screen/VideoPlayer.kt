@@ -19,7 +19,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -34,7 +33,6 @@ import com.usm.bluetube.databinding.FragmentPlayVideoBinding
 import com.usm.bluetube.videolist.model.videos.YoutubeVideo
 import com.usm.bluetube.videolist.screen.VideoListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -42,7 +40,6 @@ import kotlinx.coroutines.launch
 class VideoPlayer : BaseFragment<FragmentPlayVideoBinding>(FragmentPlayVideoBinding::inflate) {
 
     private val viewModel: VideoPlayerViewModel by viewModels()
-    private lateinit var relatedVideoFlow: StateFlow<PagingData<YoutubeVideo>>
     private val args: VideoPlayerArgs by navArgs()
     private var isFullScreen = false
     private lateinit var youTubePlayer: YouTubePlayer
@@ -92,7 +89,6 @@ class VideoPlayer : BaseFragment<FragmentPlayVideoBinding>(FragmentPlayVideoBind
         setBackPressListener()
         setupFullScreenListener()
         playVideoFromId(args.video.id)
-        relatedVideoFlow = viewModel.getSearchVideos(args.video.snippet.title)
         setupObservers()
         setupVideoDescription(args.video)
         setupRecyclerView()
@@ -160,8 +156,6 @@ class VideoPlayer : BaseFragment<FragmentPlayVideoBinding>(FragmentPlayVideoBind
     }
 
     private fun playVideoFromId(videoId: String) {
-        registerPlayerObserver()
-
         binding.ytPlayer.enableAutomaticInitialization = false
         val fullScreenControl = IFramePlayerOptions.Builder().controls(1).fullscreen(1).build()
         binding.ytPlayer.initialize(getYouTubePlayerListener(videoId), fullScreenControl)
@@ -174,10 +168,6 @@ class VideoPlayer : BaseFragment<FragmentPlayVideoBinding>(FragmentPlayVideoBind
                 youTubePlayer.loadOrCueVideo(lifecycle, videoId, 0F)
             }
         }
-    }
-
-    private fun registerPlayerObserver() {
-        lifecycle.addObserver(binding.ytPlayer)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -207,7 +197,7 @@ class VideoPlayer : BaseFragment<FragmentPlayVideoBinding>(FragmentPlayVideoBind
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                relatedVideoFlow.collectLatest { newVideos ->
+                viewModel.getSearchVideos(args.video.snippet.title).collectLatest { newVideos ->
                     videoListAdapter.submitData(newVideos)
                 }
             }

@@ -47,6 +47,7 @@ class YoutubeVideoSource(
         return when(videoType) {
             is VideoType.Videos -> fetchVideos(nextPageToken)
             is VideoType.SearchedVideo -> fetchSearchedVideos(videoType.query, nextPageToken)
+            is VideoType.Shorts -> fetchShorts(nextPageToken)
         }
     }
 
@@ -60,10 +61,16 @@ class YoutubeVideoSource(
     private suspend fun fetchSearchedVideos(query: String, nextPageToken: String): YoutubeVideoResponse {
         val searchedVideos = apiService.searchVideo(query, nextPageToken = nextPageToken).body()!!
         val newSearchedVideos = searchedVideos.deleteFirstSameVideo()
-        Log.d("YoutubeVideoSource", "fetchSearchedVideos() called with: searchedVideo = ${searchedVideos.items.size}")
         val videos: List<YoutubeVideo> = newSearchedVideos.items.convertToVideosList()
         videos.addChannelUrl()
         return YoutubeVideoResponse(newSearchedVideos.nextPageToken, newSearchedVideos.prevPageToken, items = videos)
+    }
+
+    private suspend fun fetchShorts(nextPageToken: String): YoutubeVideoResponse {
+        val shorts = apiService.fetchShorts(nextPageToken = nextPageToken).body()!!
+        val shortsVideos = shorts.items.convertToVideosList()
+        shortsVideos.addChannelUrl()
+        return YoutubeVideoResponse(shorts.nextPageToken, shorts.prevPageToken, items = shortsVideos)
     }
 
     private fun SearchVideoResponse.deleteFirstSameVideo(): SearchVideoResponse {

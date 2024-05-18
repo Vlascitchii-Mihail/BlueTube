@@ -6,10 +6,5 @@
     <color name="blueberry_blue">#003AC3</color>
     <color name="ultramarine_blue">#3E72ED</color>
     <color name="pastel_blue">#9FBBFF</color>
-    <color name="new_blue">#FAFAFA</color>
-    <color name="red">#F50057</color>
-    <color name="yellow">#FFEA00</color>
-    <color name="orange">#FF9100</color>
-    <color name="green">#43A047</color>
-    <color name="purple">#7B1FA2</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

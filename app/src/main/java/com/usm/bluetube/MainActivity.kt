@@ -1,5 +1,6 @@
 package com.usm.bluetube
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -43,7 +44,11 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
                 R.id.videoPlayerFragment -> hideBottomNavigation()
-                else -> showBottomNavigation()
+                R.id.shortsListFragment -> requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                else -> {
+                    showBottomNavigation()
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+                }
             }
         }
     }
