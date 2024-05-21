@@ -13,13 +13,15 @@ import javax.inject.Inject
 
 
 interface ShortsRepository {
-    fun fetchShorts(videoType: VideoType, viewModelScope: CoroutineScope): Flow<PagingData<YoutubeVideo>>
+    fun fetchShorts(videoType: VideoType, viewModelScope: CoroutineScope)
+    : Flow<PagingData<YoutubeVideo>>
 }
 class ShortsRepositoryImpl @Inject constructor(
     private val apiVideoListService: VideoApiService
 ): ShortsRepository {
 
-    override fun fetchShorts(videoType: VideoType, viewModelScope: CoroutineScope): Flow<PagingData<YoutubeVideo>> {
+    override fun fetchShorts(videoType: VideoType, viewModelScope: CoroutineScope)
+    : Flow<PagingData<YoutubeVideo>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 1,

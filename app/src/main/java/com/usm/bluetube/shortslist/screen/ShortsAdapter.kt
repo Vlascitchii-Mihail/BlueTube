@@ -20,6 +20,20 @@ class ShortsAdapter(
     private val addToPlayerQueue: (YouTubePlayer?) -> Unit
 ) : PagingDataAdapter<YoutubeVideo, ShortsAdapter.ShortsHolder>(ShortsCallback()){
 
+    override fun onBindViewHolder(holder: ShortsHolder, position: Int) {
+        getItem(position)?.let {
+            holder.cueVideo(it.id)
+            holder.bind(it)
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShortsHolder {
+        val binding = ItemShortsBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ShortsHolder(binding, lifecycle, addToPlayerQueue)
+    }
+
     inner class ShortsHolder(
         private val binding: ItemShortsBinding,
         private val lifecycle: Lifecycle,
@@ -31,6 +45,15 @@ class ShortsAdapter(
         init {
             lifecycle.addObserver(binding.ytPlayer)
             binding.ytPlayer.addPlayerListener()
+        }
+
+        fun bind(shortsVideo: YoutubeVideo) = with(binding) {
+            youtubeVideo = shortsVideo
+            imgShortsChannel.setImage(
+                shortsVideo.snippet.channelImgUrl,
+                imgShortsChannel.context,
+                viewModelScope
+            )
         }
 
         private fun YouTubePlayerView.addPlayerListener() {
@@ -51,30 +74,7 @@ class ShortsAdapter(
                 addToPlayerQueue.invoke(it)
             }
         }
-
-        fun bind(shortsVideo: YoutubeVideo) = with(binding) {
-            youtubeVideo = shortsVideo
-            imgShortsChannel.setImage(
-                shortsVideo.snippet.channelImgUrl,
-                imgShortsChannel.context,
-                viewModelScope
-            )
-        }
    }
-
-    override fun onBindViewHolder(holder: ShortsHolder, position: Int) {
-        getItem(position)?.let {
-            holder.cueVideo(it.id)
-            holder.bind(it)
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShortsHolder {
-        val binding = ItemShortsBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        )
-        return ShortsHolder(binding, lifecycle, addToPlayerQueue)
-    }
 }
 
 class ShortsCallback: DiffUtil.ItemCallback<YoutubeVideo>() {

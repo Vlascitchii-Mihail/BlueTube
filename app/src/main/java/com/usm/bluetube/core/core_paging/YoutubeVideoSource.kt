@@ -1,6 +1,5 @@
 package com.usm.bluetube.core.core_paging
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.usm.bluetube.core.core_api.VideoApiService
@@ -48,35 +47,51 @@ class YoutubeVideoSource(
             is VideoType.Videos -> fetchVideos(nextPageToken)
             is VideoType.SearchedVideo -> fetchSearchedVideos(videoType.query, nextPageToken)
             is VideoType.Shorts -> fetchShorts(nextPageToken)
+            is VideoType.SearchedRelatedVideo -> fetchSearchedRelatedVideos(videoType.query, nextPageToken)
         }
     }
 
     private suspend fun fetchVideos(nextPageToken: String): YoutubeVideoResponse {
         val videos = apiService.fetchVideos(nextPageToken = nextPageToken).body()!!
-        videos.items.addChannelUrl()
-        Log.d("fetchVideos", "fetchVideos() called with: nextPageToken = ${videos.items.size}")
+        videos.items.addChannelImgUrl()
         return videos
     }
 
-    private suspend fun fetchSearchedVideos(query: String, nextPageToken: String): YoutubeVideoResponse {
+    private suspend fun fetchSearchedVideos(query: String, nextPageToken: String)
+    : YoutubeVideoResponse {
+        val searchedVideos = apiService.searchVideo(query, nextPageToken = nextPageToken).body()!!
+        val videos: List<YoutubeVideo> = searchedVideos.items.convertToVideosList()
+        videos.addChannelImgUrl()
+        return YoutubeVideoResponse(
+            searchedVideos.nextPageToken,
+            searchedVideos.prevPageToken,
+            items = videos
+        )
+    }
+
+    private suspend fun fetchSearchedRelatedVideos(query: String, nextPageToken: String)
+            : YoutubeVideoResponse {
         val searchedVideos = apiService.searchVideo(query, nextPageToken = nextPageToken).body()!!
         val newSearchedVideos = searchedVideos.deleteFirstSameVideo()
         val videos: List<YoutubeVideo> = newSearchedVideos.items.convertToVideosList()
-        videos.addChannelUrl()
-        return YoutubeVideoResponse(newSearchedVideos.nextPageToken, newSearchedVideos.prevPageToken, items = videos)
+        videos.addChannelImgUrl()
+        return YoutubeVideoResponse(
+            newSearchedVideos.nextPageToken,
+            newSearchedVideos.prevPageToken,
+            items = videos
+        )
     }
 
     private suspend fun fetchShorts(nextPageToken: String): YoutubeVideoResponse {
         val shorts = apiService.fetchShorts(nextPageToken = nextPageToken).body()!!
         val shortsVideos = shorts.items.convertToVideosList()
-        shortsVideos.addChannelUrl()
+        shortsVideos.addChannelImgUrl()
         return YoutubeVideoResponse(shorts.nextPageToken, shorts.prevPageToken, items = shortsVideos)
     }
 
     private fun SearchVideoResponse.deleteFirstSameVideo(): SearchVideoResponse {
         val mutableVideoList = this.items.toMutableList()
         mutableVideoList.removeAt(0)
-        Log.d("YoutubeVideoSource", "deleteFirstSameVideo() called with: searchedVideo = ${this.items.size}")
         return this.copy(items = mutableVideoList)
     }
 
@@ -84,7 +99,6 @@ class YoutubeVideoSource(
         val videoList: MutableList<Deferred<YoutubeVideo>> = mutableListOf()
         coroutineScope {
             this@convertToVideosList.forEach { searchedVideo ->
-                Log.d("YoutubeVideoSource", "convertToVideosList() called with: searchedVideo = ${searchedVideo.id.videoId}")
                 val video = async { searchedVideo.convertToVideo() }
                 videoList.add(video)
             }
@@ -92,34 +106,33 @@ class YoutubeVideoSource(
         return videoList.awaitAll()
     }
 
-    private suspend fun  List<YoutubeVideo>?.addChannelUrl() {
+    private suspend fun  List<YoutubeVideo>?.addChannelImgUrl() {
         this?.let {
-            addUrl(it,  getChannelsUrl(it))
+            it.addUrl(getChannelImgUrl(it))
         }
     }
 
-    private fun addUrl(
-        videos: List<YoutubeVideo>,
+    private fun List<YoutubeVideo>.addUrl(
         channelUrlList: List<String>
     ) {
-        for (i in videos.indices) {
-            videos[i].snippet.channelImgUrl = channelUrlList[i]
+        for (i in this.indices) {
+            this[i].snippet.channelImgUrl = channelUrlList[i]
         }
     }
 
     private suspend fun SearchVideoItem.convertToVideo(): YoutubeVideo {
         val video = apiService.fetchParticularVideo(this.id.videoId).body()!!
-        Log.d("YoutubeVideoSource", "convertToVideo() called ${this.id.videoId}")
         return video.items.first()
     }
 
-    private suspend fun getChannelsUrl(videos: List<YoutubeVideo>): List<String> {
+    private suspend fun getChannelImgUrl(videos: List<YoutubeVideo>): List<String> {
         val channelUrlList: MutableList<Deferred<String>> = mutableListOf()
         coroutineScope {
             videos.map { video: YoutubeVideo ->
                 val channelResponse = apiService.fetchChannels(video.snippet.channelId).body()!!
-                val channelIrl = async { channelResponse.items.first().snippet.thumbnails.medium.url }
-                channelUrlList.add(channelIrl)
+                val channelImgUrl =
+                    async { channelResponse.items.first().snippet.thumbnails.medium.url }
+                channelUrlList.add(channelImgUrl)
             }
         }
         return channelUrlList.awaitAll()

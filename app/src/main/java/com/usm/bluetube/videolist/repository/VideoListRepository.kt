@@ -14,29 +14,16 @@ import javax.inject.Inject
 
 interface VideoListRepository {
 
-    fun fetchVideos(videoType: VideoType, viewModelScope: CoroutineScope): Flow<PagingData<YoutubeVideo>>
-    fun fetchSearchVideos(videoType: VideoType, viewModelScope: CoroutineScope): Flow<PagingData<YoutubeVideo>>
+    fun fetchVideos(videoType: VideoType, viewModelScope: CoroutineScope)
+    : Flow<PagingData<YoutubeVideo>>
 }
 
 class VideoListRepositoryImpl @Inject constructor(
     private val apiVideoListService: VideoApiService
 ): VideoListRepository {
 
-    override fun fetchVideos(videoType: VideoType, viewModelScope: CoroutineScope): Flow<PagingData<YoutubeVideo>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = 5,
-                maxSize = 25,
-                prefetchDistance = 10,
-                enablePlaceholders = true
-            ),
-            pagingSourceFactory = {
-                YoutubeVideoSource(apiVideoListService, viewModelScope, videoType)
-            }
-        ).flow
-    }
-
-    override fun fetchSearchVideos(videoType: VideoType, viewModelScope: CoroutineScope): Flow<PagingData<YoutubeVideo>> {
+    override fun fetchVideos(videoType: VideoType, viewModelScope: CoroutineScope)
+    : Flow<PagingData<YoutubeVideo>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 5,

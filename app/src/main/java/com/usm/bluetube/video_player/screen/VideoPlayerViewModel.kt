@@ -18,9 +18,10 @@ class VideoPlayerViewModel @Inject constructor(
     private val videoRepository: VideoListRepository,
 ) : ViewModel() {
 
-    fun getSearchVideos(query: String): StateFlow<PagingData<YoutubeVideo>> {
+    fun getSearchedRelatedVideos(query: String): StateFlow<PagingData<YoutubeVideo>> {
         return videoRepository
-            .fetchSearchVideos(VideoType.SearchedVideo(query), viewModelScope).cachedIn(viewModelScope)
+            .fetchVideos(VideoType.SearchedRelatedVideo(query), viewModelScope)
+            .cachedIn(viewModelScope)
             .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
     }
 }

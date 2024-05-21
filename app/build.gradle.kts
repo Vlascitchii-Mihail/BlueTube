@@ -25,7 +25,7 @@ android {
 
         val properties: Properties = Properties()
         properties.load(project.rootProject.file("local.properties").inputStream())
-        buildConfigField("String", "GPI_KEY", properties.getProperty("GPI_KEY"))
+        buildConfigField("String", "API_KEY", properties.getProperty("API_KEY"))
     }
 
     buildTypes {

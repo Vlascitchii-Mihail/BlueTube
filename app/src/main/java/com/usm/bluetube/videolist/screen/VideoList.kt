@@ -86,7 +86,7 @@ class VideoList : BaseFragment<FragmentVideoListBinding>(FragmentVideoListBindin
     private fun setupView() {
         setupAppBar()
         setupToolbarMenu()
-        listenTo(viewModel.videoFlow)
+        listenTo(viewModel.getVideosFlow())
         setupRecyclerView()
     }
 

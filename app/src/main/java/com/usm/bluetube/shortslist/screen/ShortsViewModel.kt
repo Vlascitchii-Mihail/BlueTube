@@ -19,7 +19,8 @@ class ShortsViewModel @Inject constructor(
 ): ViewModel() {
 
     fun getShorts(): StateFlow<PagingData<YoutubeVideo>> {
-        return shortsRepository.fetchShorts(VideoType.Shorts, viewModelScope).cachedIn(viewModelScope)
+        return shortsRepository.fetchShorts(VideoType.Shorts, viewModelScope)
+            .cachedIn(viewModelScope)
             .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
     }
 }

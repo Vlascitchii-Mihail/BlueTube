@@ -6,7 +6,7 @@ class Constants {
 
     companion object {
 
-        const val API_KEY = BuildConfig.GPI_KEY
+        const val API_KEY = BuildConfig.API_KEY
 
         const val BASE_URL = "https://www.googleapis.com/youtube/v3/"
         const val LIST_OF_VIDEOS = "videos"
