@@ -197,7 +197,8 @@ class VideoPlayer : BaseFragment<FragmentPlayVideoBinding>(FragmentPlayVideoBind
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getSearchVideos(args.video.snippet.title).collectLatest { newVideos ->
+                viewModel.getSearchedRelatedVideos(args.video.snippet.title)
+                    .collectLatest { newVideos ->
                     videoListAdapter.submitData(newVideos)
                 }
             }

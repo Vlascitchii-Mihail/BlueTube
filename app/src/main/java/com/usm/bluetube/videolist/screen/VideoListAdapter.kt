@@ -10,8 +10,10 @@ import com.usm.bluetube.databinding.VideoListItemBinding
 import com.usm.bluetube.videolist.model.videos.YoutubeVideo
 import kotlinx.coroutines.CoroutineScope
 
-class VideoListAdapter(private val viewModelScope: CoroutineScope, private val navigateToPlayer: (YoutubeVideo) -> Unit) :
-    PagingDataAdapter<YoutubeVideo, VideoListAdapter.VideoPreviewViewHolder>(ListItemCallback()) {
+class VideoListAdapter(
+    private val viewModelScope: CoroutineScope,
+    private val navigateToPlayer: (YoutubeVideo) -> Unit
+) : PagingDataAdapter<YoutubeVideo, VideoListAdapter.VideoPreviewViewHolder>(ListItemCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoPreviewViewHolder {
         val binding = VideoListItemBinding
@@ -24,13 +26,22 @@ class VideoListAdapter(private val viewModelScope: CoroutineScope, private val n
         getItem(position)?.let { holder.bind(it) }
     }
 
-    inner class VideoPreviewViewHolder(private val binding: VideoListItemBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class VideoPreviewViewHolder(private val binding: VideoListItemBinding)
+        : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(videoPreview: YoutubeVideo) = with(binding) {
             youtubeVideo = videoPreview
-            imgPreview.setImage(videoPreview.snippet.thumbnails.medium.url, imgPreview.context, viewModelScope)
+            imgPreview.setImage(
+                videoPreview.snippet.thumbnails.medium.url,
+                imgPreview.context,
+                viewModelScope
+            )
             imgPreview.setOnClickListener { navigateToPlayer.invoke(videoPreview) }
-            imgChannel.setImage(videoPreview.snippet.channelImgUrl, imgChannel.context, viewModelScope)
+            imgChannel.setImage(
+                videoPreview.snippet.channelImgUrl,
+                imgChannel.context,
+                viewModelScope
+            )
         }
     }
 

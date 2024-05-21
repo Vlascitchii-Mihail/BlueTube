@@ -31,7 +31,6 @@ class ShortsList : BaseFragment<FragmentShortsListBinding>(FragmentShortsListBin
 
     private val viewModel: ShortsViewModel by viewModels()
     private val shortsPlayerQueue: MutableList<YouTubePlayer?> = mutableListOf()
-
     private val shortsAdapter: ShortsAdapter by lazy {
         ShortsAdapter(viewModel.viewModelScope, lifecycle) { player: YouTubePlayer? ->
             shortsPlayerQueue.add(player)

@@ -51,7 +51,7 @@ fun formatDate(date: String?): String {
         (seconds < SECONDS_PER_HOUR) -> "${seconds / SECONDS_PER_MINUTE} minutes ago"
         (hours < HOURS_PER_DAY) -> "$hours hours ago"
         (days < DAYS_PER_MONTH) -> "$days days ago"
-        (days < DAYS_PER_YEAR) -> "${days / MONTHS_PER_YEAR} months ago"
+        (days < DAYS_PER_YEAR) -> "${days / DAYS_PER_MONTH} months ago"
         (date == null) -> "null"
         else -> "${days / DAYS_PER_YEAR} years ago"
     }
